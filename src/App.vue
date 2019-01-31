@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app id="inspire">
+    <app-drawer></app-drawer>
+    <app-nav-bar></app-nav-bar>
+    <app-content></app-content>
+    <app-new-ad-button></app-new-ad-button>
+    <app-new-ad></app-new-ad>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import NavBar from './components/Menu/NavBar'
+  import Drawer from "./components/Menu/Drawer";
+  import NewAd from "./components/Ads/NewAd";
+  import NewAdButton from "./components/Menu/NewAdButton";
+  import Content from "./components/Menu/Content";
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  export default {
+    components: {
+      appNavBar: NavBar,
+      appDrawer: Drawer,
+      appNewAd: NewAd,
+      appNewAdButton: NewAdButton,
+      appContent: Content
+    }
   }
-}
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
 </style>
