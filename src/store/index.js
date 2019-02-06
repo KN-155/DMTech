@@ -4,24 +4,32 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {
-        isDrawer: true,
-        isMiniDrawer: true,
-        isNewAd: false,
-        isLoginWindow: false,
+  state: {
+    openedDrawer: true,
+    miniDrawer: false,
+    visibleNewAdWindow: false,
+    visibleLoginWindow: false,
+    visibleRegistrationWindow: false,
+    isActive: false,
+  },
+  mutations: {
+    changeDrawer(state, payload) {
+      state.openedDrawer = payload;
     },
-    mutations: {
-        changeDrawer(state, payload) {
-            state.isDrawer = payload;
-        },
-        changeMiniDrawer(state, payload) {
-            state.isMiniDrawer = payload;
-        },
-        changeNewAd(state, payload) {
-            state.isNewAd = payload;
-        },
-        changeLoginWindow(state, payload) {
-            state.isLoginWindow= payload;
-        },
-    }
-})
+    changeMiniDrawer(state, payload) {
+      state.miniDrawer = payload;
+    },
+    changeVisibilityNewAdWindow(state, payload) {
+      state.visibleNewAdWindow = payload;
+    },
+    changeVisibilityLoginWindow(state, payload) {
+      state.visibleLoginWindow = payload;
+    },
+    changeVisibilityRegistrationWindow(state, payload) {
+      state.visibleRegistrationWindow = payload;
+    },
+    changeActivity(state, payload) {
+      state.isActive = payload;
+    },
+  },
+});

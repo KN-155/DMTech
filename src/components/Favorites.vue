@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row>
       <v-flex xs12>
-        <h1>Объявление</h1>
+        <h1>Избранное</h1>
       </v-flex>
     </v-layout>
   </v-container>

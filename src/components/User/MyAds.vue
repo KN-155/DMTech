@@ -1,18 +1,15 @@
 <template>
-    <v-container>
-        <v-layout row>
-            <v-flex xs12>
-                <h1>MyAds</h1>
-            </v-flex>
-        </v-layout>
-    </v-container>
+  <v-container>
+    <v-layout row>
+      <v-flex xs12>
+        <h1>Мои объявления</h1>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-    export default {
-    }
+export default {};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
