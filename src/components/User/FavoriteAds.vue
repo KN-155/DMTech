@@ -14,10 +14,10 @@ import Card from '../Ads/Card';
 export default {
   computed: {
     ads() {
-      return this.$store.getters.MY_ADS(this.userId);
+      return this.$store.getters.FAVORITE_ADS(this.userFavorites);
     },
-    userId() {
-      return this.$store.getters.USER_ID;
+    userFavorites() {
+      return this.$store.getters.USER_FAVORITES;
     },
   },
   components: {

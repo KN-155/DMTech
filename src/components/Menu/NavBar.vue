@@ -1,66 +1,69 @@
 <template>
   <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" app fixed>
-    <v-toolbar-side-icon @click.stop="onSideIcon"></v-toolbar-side-icon>
-    <v-toolbar-title>
-      <span class="hidden-sm-and-down">Доска Объявлений</span>
-    </v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-text-field
-      v-model="search"
-      color="deep-purple"
-      flat
-      solo
-      hide-details
-      prepend-inner-icon="search"
-      label="Поиск"
-      class="hidden-sm-and-down"
-    ></v-text-field>
-    <v-spacer></v-spacer>
-
-    <v-menu offset-y left>
-      <v-btn icon slot="activator">
-        <v-icon>notifications</v-icon>
-      </v-btn>
-      <v-list>
-        <v-list-tile
-          v-for="i in 5"
-          :key="i"
-          @click="
-            '';
-
-          "
+    <template v-if="!openedSearch">
+      <v-toolbar-side-icon
+        class="hidden-lg-and-up"
+        @click.stop="onSideIcon"
+      ></v-toolbar-side-icon>
+      <v-toolbar-title>
+        <router-link tag="span" to="/" class="hidden-sm-and-down pointer"
+          >Доска Объявлений</router-link
         >
-          <v-list-tile-title>уведомление {{ i }}</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-menu>
-
-    <v-menu offset-y left>
-      <v-btn icon large slot="activator">
-        <v-avatar size="36px" color="deep-purple">
-          <img
-            v-if="this.$store.state.isActive"
-            src="https://pp.userapi.com/c850632/v850632107/4e6f3/IbBVcRfI14g.jpg"
-            alt="Avatar"
-          />
-          <v-icon v-else dark>account_circle</v-icon>
-        </v-avatar>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        color="deep-purple"
+        flat
+        solo
+        hide-details
+        prepend-inner-icon="search"
+        label="Поиск"
+        class="hidden-sm-and-down"
+      ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn icon class="hidden-md-and-up" @click.stop="openedSearch = true">
+        <v-icon>search</v-icon>
       </v-btn>
-      <v-list>
-        <v-list-tile
-          v-for="(link, index) in links"
-          :key="index"
-          :to="link.url"
-          active-class="deep-purple--text"
-          @click="link.method ? methods[link.method]() : ''"
-        >
-          <v-list-tile-action>
-            <v-icon left>{{ link.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>{{ link.title }}</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-menu>
+      <v-menu offset-y left>
+        <v-btn icon large slot="activator">
+          <v-avatar size="36px" color="deep-purple">
+            <img
+              v-if="this.$store.getters.USER && this.$store.getters.USER.avatar"
+              :src="this.$store.getters.USER.avatar"
+              alt="Avatar"
+            />
+            <v-icon v-else dark>account_circle</v-icon>
+          </v-avatar>
+        </v-btn>
+        <v-list>
+          <v-list-tile
+            v-for="(link, index) in links"
+            :key="index"
+            :to="link.url"
+            active-class="deep-purple--text"
+            @click="link.method ? methods[link.method]() : ''"
+          >
+            <v-list-tile-action>
+              <v-icon left>{{ link.icon }}</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-title>{{ link.title }}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+    </template>
+    <template v-else>
+      <v-text-field
+        append-icon="clear"
+        v-model="search"
+        single-line
+        full-width
+        hide-details
+        color="deep-purple"
+        @click:append="openedSearch = false"
+        label="Поиск"
+      ></v-text-field>
+    </template>
   </v-toolbar>
 </template>
 
@@ -71,31 +74,31 @@ export default {
   data() {
     return {
       search: '',
+      openedSearch: false,
       methods: {
-        onLogin: () => this.$store.commit('changeVisibilityLoginWindow', true),
+        onLogin: () =>
+          this.$store.dispatch('CHANGE_VISIBILITY_LOGIN_WINDOW', true),
         onRegistration: () =>
-          this.$store.commit('changeVisibilityRegistrationWindow', true),
-        onExit: () => this.$store.commit('changeActivity', false),
+          this.$store.dispatch('CHANGE_VISIBILITY_REGISTRATION_WINDOW', true),
+        onExit: () => this.$store.dispatch('LOG_OUT'),
       },
     };
   },
   methods: {
     onSideIcon() {
-      if (this.$vuetify.breakpoint.lgAndUp) {
-        this.$store.commit('changeMiniDrawer', !this.$store.state.miniDrawer);
-        this.$store.commit('changeDrawer', true);
-      } else {
-        this.$store.commit('changeDrawer', !this.$store.state.openedDrawer);
-        this.$store.commit('changeMiniDrawer', false);
-      }
+      this.$store.dispatch('CHANGE_DRAWER', !this.$store.getters.OPENED_DRAWER);
     },
   },
   computed: {
     links() {
-      return this.$store.state.isActive ? USER_LINKS : GUEST_LINKS;
+      return this.$store.getters.USER ? USER_LINKS : GUEST_LINKS;
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.pointer {
+  cursor: pointer;
+}
+</style>

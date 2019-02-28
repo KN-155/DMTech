@@ -89,10 +89,10 @@ export default {
   computed: {
     visibleWindow: {
       get() {
-        return this.$store.state.visibleRegistrationWindow;
+        return this.$store.getters.VISIBLE_REGISTRATION_WINDOW;
       },
       set(value) {
-        this.$store.commit('changeVisibilityRegistrationWindow', value);
+        this.$store.dispatch('CHANGE_VISIBILITY_REGISTRATION_WINDOW', value);
       },
     },
   },
@@ -100,11 +100,15 @@ export default {
     onSubmit() {
       if (this.$refs.form.validate()) {
         this.visibleWindow = false;
+        this.$store.dispatch('CREATE_USER', {
+          email: this.email,
+          password: this.password,
+        });
       }
     },
     onLogin() {
       this.visibleWindow = false;
-      this.$store.commit('changeVisibilityLoginWindow', true);
+      this.$store.dispatch('CHANGE_VISIBILITY_LOGIN_WINDOW', true);
     },
   },
 };

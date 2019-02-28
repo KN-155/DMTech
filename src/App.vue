@@ -29,6 +29,10 @@ export default {
     appRegistration: Registration,
     appLogin: Login,
   },
+
+  mounted() {
+    this.$store.dispatch('GET_ADS');
+  }
 };
 </script>
 

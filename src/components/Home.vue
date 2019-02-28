@@ -1,15 +1,15 @@
 <template>
-  <v-container>
-    <v-layout row>
-      <v-flex xs12>
-        <h1>Главная страница</h1>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <app-products-list />
 </template>
 
 <script>
-export default {};
+import List from './Ads/AdsList';
+
+export default {
+  components: {
+    appProductsList: List,
+  },
+};
 </script>
 
 <style scoped></style>

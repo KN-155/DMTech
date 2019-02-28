@@ -74,23 +74,27 @@ export default {
   computed: {
     visibleWindow: {
       get() {
-        return this.$store.state.visibleLoginWindow;
+        return this.$store.getters.VISIBLE_LOGIN_WINDOW;
       },
       set(value) {
-        this.$store.commit('changeVisibilityLoginWindow', value);
+        this.$store.dispatch('CHANGE_VISIBILITY_LOGIN_WINDOW', value);
       },
     },
   },
   methods: {
     onSubmit() {
       if (this.$refs.form.validate()) {
-        this.$store.commit('changeActivity', true);
+        const user = {
+          email: this.email,
+          password: this.password,
+        };
         this.visibleWindow = false;
+        this.$store.dispatch('LOG_IN', user);
       }
     },
     onRegistration() {
       this.visibleWindow = false;
-      this.$store.commit('changeVisibilityRegistrationWindow', true);
+      this.$store.dispatch('CHANGE_VISIBILITY_REGISTRATION_WINDOW', true);
     },
   },
 };

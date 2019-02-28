@@ -8,10 +8,10 @@
 export default {
   methods: {
     onNewAd() {
-      if (this.$store.state.isActive) {
-        this.$store.commit('changeVisibilityNewAdWindow', true);
+      if (this.$store.getters.USER) {
+        this.$store.dispatch('CHANGE_VISIBILITY_NEW_AD_WINDOW', true);
       } else {
-        this.$store.commit('changeVisibilityLoginWindow', true);
+        this.$store.dispatch('CHANGE_VISIBILITY_LOGIN_WINDOW', true);
       }
     },
   },
